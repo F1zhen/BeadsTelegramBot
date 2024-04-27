@@ -102,7 +102,7 @@ ADMIN_KB = ReplyKeyboardMarkup(
           ],
 
 {
-            KeyboardButton(text="Ассортимент бижютерии")
+            KeyboardButton(text="Ассортимент")
         },
     ],
     resize_keyboard=True
@@ -122,6 +122,34 @@ TYPE_KB = ReplyKeyboardMarkup(
 
     ],
     resize_keyboard=True
+)
+
+admin_bizh_kb = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text = "Колье"),
+     ],
+        {
+            KeyboardButton(text = "Чокеры"),
+        },
+{
+            KeyboardButton(text = "Кольца"),
+        },
+{
+            KeyboardButton(text = "Подвески"),
+        },
+{
+            KeyboardButton(text = "Браслеты"),
+        },
+{
+            KeyboardButton(text = "Серьги"),
+        },
+{
+            KeyboardButton(text = "Вернуться в Админ-панель"),
+        }
+    ],
+    resize_keyboard=True,
+    input_field_placeholder= "Что вас интересует?"
 )
 
 

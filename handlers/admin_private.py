@@ -6,7 +6,7 @@ from aiogram.filters import StateFilter
 
 from filters.chat_types import ChatTypeFilter, IsAdmin
 
-from keyboards.reply import ADMIN_KB
+from keyboards.reply import ADMIN_KB, bizh_kb, admin_bizh_kb
 
 from db.orm_query import orm_add_product, orm_delete_product, orm_update_product, orm_get_productsClothes, orm_get_products
 
@@ -21,16 +21,14 @@ async def add_product(message: types.Message):
     await message.answer("Выберите действие", reply_markup=ADMIN_KB)
 
 
-@admin_router.message(F.text == "Ассортимент бижютерии")
+@admin_router.message(F.text == "Ассортимент")
 async def starring_at_product(message: types.Message, session: AsyncSession):
-    for product in await orm_get_products(session):
-        await message.answer_photo(
-            product.image,
-            caption=f" <strong>{product.name}\
-                                            \n Описание:  {product.description} \n Стоимость: {round(product.price, 2)} тенге "
-        )
-    await message.answer("ОК, вот список товаров")
+    await message.answer("ОК, вот список товаров", reply_markup=admin_bizh_kb)
 
+
+@admin_router.message(F.text == "Вернуться в Админ-панель")
+async def start(message: types.Message):
+    await message.answer("Возрат..", reply_markup=ADMIN_KB)
 
 
 #Код ниже для машины состояний (FSM)
@@ -103,12 +101,11 @@ async def add_price(message: types.Message, state: FSMContext):
 @admin_router.message(AddProduct.image, F.photo)
 async def add_image(message: types.Message, state: FSMContext, session: AsyncSession):
     await state.update_data(image=message.photo[-1].file_id)
-    await message.answer("Товар добавлен", reply_markup=ADMIN_KB)
     data = await state.get_data()
     try:
         await orm_add_product(session, data)
 
-        await message.answer(str(data))
+        await message.answer("Товар добавлен", reply_markup=ADMIN_KB)
         await state.clear()
 
     except Exception as e:
