@@ -9,11 +9,15 @@ from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv())
 
 from db.engine import create_db, drop_db, session_maker
+
 from handlers.user_private import user_router
-from common.bot_cmds_list import private
 from handlers.admin_private import admin_router
 from handlers.admin_group import user_group_router
+from handlers.user_private_bizh import user_router_bizh
+
 from MiddleWare.db import DataBaseSession
+
+from common.bot_cmds_list import private
 
 
 
@@ -30,6 +34,7 @@ dp = Dispatcher(fsm_strategy = FSMStrategy.USER_IN_CHAT)
 dp.include_router(user_router)
 dp.include_router(admin_router)
 dp.include_router(user_group_router)
+dp.include_router(user_router_bizh)
 
 async def on_startup(bot):
     run_param = False

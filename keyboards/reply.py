@@ -28,7 +28,7 @@ del_kby = ReplyKeyboardRemove()
 catalog_kb = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text = "Одежда"),
+            KeyboardButton(text = "Кастом одежды"),
      ],
         {
             KeyboardButton(text = "Бижютерия"),
@@ -101,19 +101,9 @@ ADMIN_KB = ReplyKeyboardMarkup(
 
           ],
 
-
-        {
-            KeyboardButton(text="Изменить товар")
-        },
-
 {
-            KeyboardButton(text="Удалить Товар")
+            KeyboardButton(text="Ассортимент бижютерии")
         },
-
-{
-            KeyboardButton(text = "Вернуться в Меню"),
-        }
-
     ],
     resize_keyboard=True
 )
@@ -121,7 +111,7 @@ ADMIN_KB = ReplyKeyboardMarkup(
 
 TYPE_KB = ReplyKeyboardMarkup(
     keyboard=[
-        [ KeyboardButton(text="Одежда")
+        [ KeyboardButton(text="Одежда ")
 
           ],
 

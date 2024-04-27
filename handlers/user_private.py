@@ -3,6 +3,9 @@ from aiogram.filters import CommandStart, Command, or_f
 from aiogram.utils.formatting import as_list, as_marked_list, Bold, as_marked_section
 from keyboards import reply
 from filters.chat_types import ChatTypeFilter, IsAdmin
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from db.orm_query import *
 
 
 user_router = Router()
@@ -23,8 +26,6 @@ async def start(message: types.Message):
 @user_router.message(or_f(Command('order'), (F.text.lower() == "сделать заказ")))
 async def start(message: types.Message):
     await message.answer('для завершения заказа, заполните данные ниже ', reply_markup=reply.info_kv)
-
-
 
 
 @user_router.message(or_f(Command('payment'), (F.text.lower() == "способ оплаты")))
@@ -58,13 +59,9 @@ async def start(message: types.Message):
     await message.answer('поддержка:   ')
 
 
-@user_router.message(F.text.lower() == "одежда")
-async def start(message: types.Message):
+@user_router.message(F.text.lower() == "Кастом одежды")
+async def start(message: types.Message, session: AsyncSession):
     await message.answer('Ассортимент одежды:   ')
-
-@user_router.message(F.text.lower() == "бижютерия")
-async def start(message: types.Message):
-    await message.answer("Выберите интересуюеще", reply_markup=reply.bizh_kb)
 
 
 @user_router.message(F.text.lower() == "вернуться в меню")

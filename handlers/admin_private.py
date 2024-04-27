@@ -8,8 +8,7 @@ from filters.chat_types import ChatTypeFilter, IsAdmin
 
 from keyboards.reply import ADMIN_KB
 
-from db.orm_query import orm_add_product
-
+from db.orm_query import orm_add_product, orm_delete_product, orm_update_product, orm_get_productsClothes, orm_get_products
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -19,22 +18,19 @@ admin_router.message.filter(ChatTypeFilter(["private"]), IsAdmin())
 
 @admin_router.message(Command('admin'))
 async def add_product(message: types.Message):
-    await message.answer("Что хотите сделать?", reply_markup=ADMIN_KB)
+    await message.answer("Выберите действие", reply_markup=ADMIN_KB)
 
 
-@admin_router.message(F.text == "Каталог")
-async def starring_at_product(message: types.Message):
+@admin_router.message(F.text == "Ассортимент бижютерии")
+async def starring_at_product(message: types.Message, session: AsyncSession):
+    for product in await orm_get_products(session):
+        await message.answer_photo(
+            product.image,
+            caption=f" <strong>{product.name}\
+                                            \n Описание:  {product.description} \n Стоимость: {round(product.price, 2)} тенге "
+        )
     await message.answer("ОК, вот список товаров")
 
-
-@admin_router.message(F.text == "Изменить товар")
-async def change_product(message: types.Message):
-    await message.answer("ОК, вот список товаров")
-
-
-@admin_router.message(F.text == "Удалить товар")
-async def delete_product(message: types.Message):
-    await message.answer("Выберите товар(ы) для удаления")
 
 
 #Код ниже для машины состояний (FSM)
@@ -42,7 +38,6 @@ class AddProduct(StatesGroup):
     name = State()
     description = State()
     price = State()
-    type = State()
     image = State()
 
 
@@ -87,7 +82,7 @@ async def cancel_handler(message: types.Message, state: FSMContext) -> None:
 
 @admin_router.message(AddProduct.name, F.text)
 async def add_name(message: types.Message, state: FSMContext):
-    await state.update_data(name=message.text)
+    await state.update_data(name=message.text.lower())
     await message.answer("Введите описание товара")
     await state.set_state(AddProduct.description)
 
@@ -102,15 +97,8 @@ async def add_description(message: types.Message, state: FSMContext):
 @admin_router.message(AddProduct.price, F.text)
 async def add_price(message: types.Message, state: FSMContext):
     await state.update_data(price=message.text)
-    await message.answer("Введите тип товара")
-    await state.set_state(AddProduct.type)
-
-@admin_router.message(AddProduct.type, F.text)
-async def add_price(message: types.Message, state: FSMContext):
-    await state.update_data(type=message.text)
     await message.answer("Загрузите изображение товара")
     await state.set_state(AddProduct.image)
-
 
 @admin_router.message(AddProduct.image, F.photo)
 async def add_image(message: types.Message, state: FSMContext, session: AsyncSession):

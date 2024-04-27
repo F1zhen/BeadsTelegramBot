@@ -11,6 +11,5 @@ class Product(Base):
     name: Mapped[str] = mapped_column(String(150), nullable=False)
     description: Mapped[str] = mapped_column(Text)
     price: Mapped[float] = mapped_column(Float, nullable=False)
-    type: Mapped[str] = mapped_column(INT, nullable=False)
     image: Mapped[str] = mapped_column(String(150))
 
