@@ -4,7 +4,7 @@ from db.models import Product
 
 
 
-async def orm_add_product(session: AsyncSession, data: dict): #e
+async def orm_add_product(session: AsyncSession, data: dict):
     obj = Product(
         name=data["name"],
         description=data["description"],
