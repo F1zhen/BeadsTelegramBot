@@ -6,7 +6,6 @@ start_kb = ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton(text = "Каталог"),
-            KeyboardButton(text = "Сделать заказ"),
             KeyboardButton(text = "Способ оплаты"),
 
 
@@ -61,6 +60,9 @@ bizh_kb = ReplyKeyboardMarkup(
         },
 {
             KeyboardButton(text = "Серьги"),
+        },
+{
+            KeyboardButton(text = "Брелки"),
         },
 {
             KeyboardButton(text = "Вернуться в Меню"),
@@ -143,6 +145,9 @@ admin_bizh_kb = ReplyKeyboardMarkup(
         },
 {
             KeyboardButton(text = "Серьги"),
+        },
+{
+            KeyboardButton(text = "Брелки"),
         },
 {
             KeyboardButton(text = "Вернуться в Админ-панель"),

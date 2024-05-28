@@ -54,6 +54,12 @@ async def orm_get_productSergy(session: AsyncSession):
     result = await session.execute(query)
     return result.scalars().all()
 
+async def orm_get_productBrelky(session: AsyncSession):
+    query = select(Product).where(Product.name == "брелки")
+    result = await session.execute(query)
+    return result.scalars().all()
+
+
 async def orm_get_product(session: AsyncSession, product_id: int):
     query = select(Product).where(Product.id == product_id)
     result = await session.execute(query)

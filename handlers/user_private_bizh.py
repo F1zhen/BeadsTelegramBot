@@ -76,3 +76,14 @@ async def start(message: types.Message, session: AsyncSession):
                                 \n Описание:  {product.description} \n Стоимость: {round(product.price, 2)} тенге "
         )
         await message.answer('Серьги ⬆️  ')
+
+
+@user_router_bizh.message(F.text.lower() == "брелки")
+async def start(message: types.Message, session: AsyncSession):
+    for product in await orm_get_productBrelky(session):
+        await message.answer_photo(
+            product.image,
+            caption=f" {product.name}\
+                                \n Описание:  {product.description} \n Стоимость: {round(product.price, 2)} тенге "
+        )
+        await message.answer('Брелки ⬆️  ')

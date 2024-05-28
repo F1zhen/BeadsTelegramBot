@@ -52,11 +52,11 @@ async def start(message: types.Message):
 
 @user_router.message(or_f(Command('about'), (F.text.lower() == "о нас")))
 async def start(message: types.Message):
-    await message.answer('О нас:   ')
+    await message.answer('О нас: Добро пожаловать в наш уютный магазинчик, где каждая бусинка несет частичку любви и тепла! Мы создаем уникальные украшения из бисера, вкладывая душу в каждое изделие. Наши украшения - это не просто аксессуары, это маленькие произведения искусства, созданные с заботой и вниманием к деталям.  ')
 
-@user_router.message(or_f(Command('direct'), (F.text.lower() == "Поддержка")))
+@user_router.message(or_f(Command('direct'), (F.text == "Поддержка")))
 async def start(message: types.Message):
-    await message.answer('поддержка:   ')
+    await message.answer('По всем вопросам к @F1zhen   ')
 
 
 @user_router.message(F.text.lower() == "Кастом одежды")
@@ -67,6 +67,13 @@ async def start(message: types.Message, session: AsyncSession):
 @user_router.message(F.text.lower() == "вернуться в меню")
 async def start(message: types.Message):
     await message.answer("Возрат..", reply_markup=reply.start_kb)
+
+
+@user_router.message(F.text == "Кастом одежды")
+async def start(message: types.Message):
+    await message.answer("По вопросам кастома, обращайтесь к @F1zhen")
+
+
 
 
 
