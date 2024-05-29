@@ -27,7 +27,7 @@ def callback_handler(call):
 def callback_handler(call):
     markup = types.InlineKeyboardMarkup()
     webbrowser.open('https://www.instagram.com/direct/t/110412183687781')
-    bot.reply_to(message,э reply_markup=markup)
+    bot.reply_to(message, reply_markup=markup)
 
 
 

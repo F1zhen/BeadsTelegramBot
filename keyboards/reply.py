@@ -157,4 +157,17 @@ admin_bizh_kb = ReplyKeyboardMarkup(
     input_field_placeholder= "Что вас интересует?"
 )
 
+order_KB = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text = "Оформить заказ"),
+     ],
+        {
+            KeyboardButton(text = "Вернуться в Меню"),
+        },
+    ],
+    resize_keyboard=True,
+    input_field_placeholder= "Что вас интересует?"
+)
+
 
